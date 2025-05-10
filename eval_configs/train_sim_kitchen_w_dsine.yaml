@@ -1,0 +1,31 @@
+# Inherit defaults from the base sim_kitchen config
+defaults:
+  - train_sim_kitchen
+  # Override the encoder default from train_sim_kitchen using the 'override' keyword
+  - override encoder: resnet18_w_decoder
+  - _self_
+
+# Add the auxiliary loss weight parameter
+# You can adjust this value as needed
+aux_loss_weight: 10.0
+
+# Override specific dataset parameters directly
+# Since 'dataset' itself isn't a config group in the base defaults, we modify its fields
+dataset:
+  # Use 'both' to load 6 channels (RGB+Normal) based on the error message
+  obs_type: both
+
+# Explicitly override model's goal_dim to ensure it's 0, overriding any inherited value
+
+
+# Ensure the dataset provides 6 channels (RGB + Normal) - Handled by dataset.obs_type override above.
+# This might require changes in the dataset definition itself if not already handled.
+# Assuming the SimKitchenTrajectoryDataset in train_sim_kitchen.yaml
+# already provides 6 channels when obs_type is 'obs_only' or similar.
+# If not, the dataset config might need adjustment or replacement.
+
+# Note: Ensure the 'obs_dim' in the model config matches the output
+# dimension of the resnet18_w_decoder encoder (which is 512).
+# The base config already uses encoder.output_dim, so this should be fine.
+
+# Other parameters are inherited from train_sim_kitchen.yaml

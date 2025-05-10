@@ -1,0 +1,14 @@
+_target_: models.encoder.multiview_stack.MultiviewStack
+
+encoders:
+  - _target_: torch.load
+    f: ${enc_path}
+    # f: /home/zijin/baby-to-robot/exp_local/2024.11.14/sweep_052716_train_sim_kitchen_dynamo/0/encoder.pt   # w/ diagonal mask
+  # - _target_: torch.load
+    # f: /home/zijin/baby-to-robot/exp_local/2024.11.14/sweep_052716_train_sim_kitchen_dynamo/0/encoder.pt   # w/ diagonal mask
+  # f: /home/zijin/baby-to-robot/exp_local/2024.11.14/sweep_052716_train_sim_kitchen_dynamo/0/exp_local/2024.11.14/sweep_052716_train_sim_kitchen_dynamo/1/encoder.pt #w/o diagnoal mask
+normalizations:
+  - - [0, 0, 0]
+    - [1, 1, 1]
+
+output_dim: 512

@@ -1,0 +1,6 @@
+_target_: models.encoder.resnet_w_decoder.resnet18
+pretrained: false
+output_dim: 512 # This is fixed for resnet18 but kept for consistency
+unit_norm: false
+imgnet_norm: true # Set to true as we handle normalization inside the model
+# mean and std are default ImageNet values used inside the model if imgnet_norm is true

@@ -1,0 +1,11 @@
+save_path: /data/zijin/dynamo_out  # e.g. root directory of this repo
+wandb_entity: hu_zijin  # e.g. your wandb username
+
+
+dataset_root: /home/jeff/data_discovery/zijin/dynamo_repro_datasets # e.g. set this to the unzipped directory of all datasets
+
+datasets:
+    pusht: ${env_vars.dataset_root}/pusht_dataset
+    sim_kitchen: ${env_vars.dataset_root}/sim_kitchen_dataset
+    libero: ${env_vars.dataset_root}/libero_dataset
+    block_push: ${env_vars.dataset_root}/block_push_dataset

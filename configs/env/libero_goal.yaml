@@ -1,0 +1,17 @@
+views: 2
+action_dim: 7
+
+workspace:
+  _target_: workspaces.libero_goal.LiberoGoalWorkspace
+
+dataset:
+  _target_: datasets.libero.LiberoGoalDataset
+  data_directory: ${env_vars.datasets.libero}
+
+transform:
+  _target_: datasets.transform.custom_transform
+  random_resized_crop: false
+  color_jitter: false
+  random_grayscale: false
+  gaussian_blur: false
+  horizontal_flip: false

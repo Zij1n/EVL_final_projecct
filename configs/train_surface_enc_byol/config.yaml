@@ -1,0 +1,80 @@
+# Hydra Configuration for train_surface_enc_byol.py
+
+# Default configuration - can be overridden via command line
+defaults:
+  - _self_
+project: surface_byol_run
+# --- Data Configuration ---
+data:
+  dir: "/data/zijin/dynamo_repro_datasets/sim_kitchen_dataset" # Path to your dataset
+  partial: 0 # Percentage or number of samples to use (if applicable)
+
+# --- Model Configuration ---
+model:
+  name: "resnet18" # Base model architecture
+  pretrained: false # Whether to use pretrained weights (usually False for SSL)
+  image_size: 224
+  # BYOL specific parameters
+  byol:
+    hidden_layer: "avgpool"
+    projection_size: 256
+    projection_hidden_size: 4096
+    moving_average_decay: 0.99
+
+# --- Training Configuration ---
+training:
+  batch_size: 512 # Per-GPU batch size
+  num_epochs: 100
+  warmup_epochs: 10
+  num_workers: 0 # Dataloader workers per process
+  pin_memory: true
+  drop_last: true
+  save_every_n_epochs: 10 # Save checkpoint every 10 epochs
+  do_normalize: true
+
+# --- Optimizer Configuration ---
+optimizer:
+  name: "lars" # Optimizer type
+  lr: 0.2 # Base learning rate
+  weight_decay: 1.5e-6
+  momentum: 0.9
+  # LARS specific parameters
+  lars:
+    trust_coefficient: 0.001
+
+# --- Scheduler Configuration ---
+scheduler:
+  name: "sequential_linear_cosine" # Describes the scheduler combination
+  # Parameters for LinearLR and CosineAnnealingLR are derived from training epochs/steps
+
+# --- Logging & Checkpointing ---
+logging:
+  log_every_n_steps: 1
+  checkpoint_dir: "checkpoints_byol" # Relative path for checkpoints (Hydra manages output dir)
+  checkpoint_every_n_steps: 1000
+
+# --- WandB Configuration ---
+wandb:
+  project: surface_normal_byol
+  entity: hu_zijin
+
+# --- Accelerator Configuration ---
+accelerator:
+  find_unused_parameters: true # For DDP
+
+# --- Hydra Specific Configuration ---
+hydra:
+  run:
+    # Hydra changes the working directory by default.
+    # Output will be in outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    dir: outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  # Removed job section as it caused a ValidationError
+  # job:
+  #   # Prepend the original working directory to relative paths if needed
+  #   # Or use hydra.utils.to_absolute_path() in the script
+  #   # Removed override_dirname as it caused a ConfigKeyError
+  #   # config:
+  #   #   override_dirname:
+  #   #     kv_sep: '='
+  #   #     item_sep: ','
+  #   #     node_sep: '.'

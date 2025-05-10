@@ -1,0 +1,19 @@
+views: 1
+action_dim: 9
+
+workspace:
+  _target_: workspaces.sim_kitchen.SimKitchenWorkspace
+
+dataset:
+  _target_: datasets.sim_kitchen.SimKitchenTrajectoryDataset
+  data_directory: ${env_vars.datasets.sim_kitchen}
+  onehot_goals: False
+  obs_type: both
+  
+transform:
+  _target_: datasets.transform.custom_transform
+  random_resized_crop: false
+  color_jitter: false
+  random_grayscale: false
+  gaussian_blur: false
+  horizontal_flip: false
