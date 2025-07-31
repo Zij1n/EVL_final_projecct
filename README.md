@@ -2,6 +2,9 @@
 
 Zijin Hu, Zifan Zhao
 
+📄 [Report](./Embodied_vision_project_final_report.pdf)
+
+
 This repo contains code for final preojct of Embodied Learning and Vision
 This code is based on the following repositories:
 - DynaMo: https://github.com/jeffacce/dynamo_ssl
